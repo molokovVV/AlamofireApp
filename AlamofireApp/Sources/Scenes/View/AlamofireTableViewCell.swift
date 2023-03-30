@@ -11,20 +11,30 @@ class AlamofireTableViewCell: UITableViewCell {
     
     //MARK: - UI Elements
     
-    private lazy var nameLabel: UILabel = {
+    lazy var nameLabel: UILabel = {
         let label = UILabel()
         return label
     }()
     
-    private lazy var typeLabel: UILabel = {
+    lazy var typeLabel: UILabel = {
         let label = UILabel()
         return label
+    }()
+    
+    lazy var cardImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        return imageView
     }()
     
     //MARK: - Lifecycle
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupView()
+        setupHierarchy()
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -40,20 +50,26 @@ class AlamofireTableViewCell: UITableViewCell {
     private func setupHierarchy() {
         addSubview(nameLabel)
         addSubview(typeLabel)
+        addSubview(cardImageView)
     }
     
     private func setupLayout() {
+        cardImageView.snp.makeConstraints { make in
+                make.top.leading.equalToSuperview().inset(8)
+                make.width.equalTo(cardImageView.snp.height).multipliedBy(0.75)
+                make.height.equalTo(150) 
+                make.bottom.lessThanOrEqualToSuperview().inset(8) 
+            }
+        
         nameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.left.equalToSuperview().offset(10)
-            make.right.equalToSuperview().offset(-10)
+            make.top.equalToSuperview().inset(8)
+            make.leading.equalTo(cardImageView.snp.trailing).offset(8)
+            make.trailing.equalToSuperview().inset(8)
         }
         
         typeLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(5)
-            make.left.equalToSuperview().offset(10)
-            make.right.equalToSuperview().offset(-10)
-            make.bottom.equalToSuperview().offset(-10)
+            make.top.equalTo(nameLabel.snp.bottom).offset(4)
+            make.leading.trailing.equalTo(nameLabel)
         }
     }
 }

@@ -11,13 +11,13 @@ class AlamofireTableView: UIView {
     
     // MARK: - UI Elements
     
-    private lazy var searchTextField: UITextField = {
+    lazy var searchTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Введите название карты"
         return textField
     }()
     
-    private lazy var searchButton: UIButton = {
+    lazy var searchButton: UIButton = {
         let button = UIButton()
         button.setTitle("Поиск", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -25,7 +25,7 @@ class AlamofireTableView: UIView {
         return button
     }()
     
-    private lazy var cardTableView: UITableView = {
+    lazy var cardTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(AlamofireTableViewCell.self, forCellReuseIdentifier: "AlamofireTableViewCell")
         return tableView

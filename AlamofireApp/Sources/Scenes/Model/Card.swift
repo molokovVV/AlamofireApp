@@ -8,10 +8,13 @@
 import Foundation
 
 struct Card: Codable {
-    let name: String
-    let imageUrl: String
-    let type: String
-    let setName: String
-    let rarity: String
-    let text: String?
+    let name: String?
+    let imageUrl: String?
+    let type: String?
+    
+    enum CodingKeys: String, CodingKey {
+            case name
+            case type
+            case imageUrl = "imageUrl"
+        }
 }

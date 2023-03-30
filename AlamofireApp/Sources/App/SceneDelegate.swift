@@ -9,14 +9,16 @@ import UIKit
 import SnapKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: windowScene)
+        
+        let window = UIWindow(windowScene: windowScene)
         let viewController = ViewController()
-        window?.rootViewController = viewController
-        window?.makeKeyAndVisible()
+        window.rootViewController = UINavigationController(rootViewController: viewController)
+        self.window = window
+        window.makeKeyAndVisible()
     }
 }
