@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		04B15E2729D57332009159C4 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 04B15E2629D57332009159C4 /* SnapKit */; };
+		04B15E2929D574F7009159C4 /* CardsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B15E2829D574F7009159C4 /* CardsResponse.swift */; };
+		04B15E2B29D57556009159C4 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B15E2A29D57556009159C4 /* Card.swift */; };
+		04B15E2D29D576F0009159C4 /* AlamofireTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B15E2C29D576F0009159C4 /* AlamofireTableViewCell.swift */; };
+		04B15E2F29D57CD6009159C4 /* AlamofireTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B15E2E29D57CD6009159C4 /* AlamofireTableView.swift */; };
 		04EF219029D5705E001F2793 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EF218F29D5705E001F2793 /* AppDelegate.swift */; };
 		04EF219229D5705E001F2793 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EF219129D5705E001F2793 /* SceneDelegate.swift */; };
 		04EF219429D5705E001F2793 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EF219329D5705E001F2793 /* ViewController.swift */; };
@@ -16,6 +20,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04B15E2829D574F7009159C4 /* CardsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsResponse.swift; sourceTree = "<group>"; };
+		04B15E2A29D57556009159C4 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		04B15E2C29D576F0009159C4 /* AlamofireTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireTableViewCell.swift; sourceTree = "<group>"; };
+		04B15E2E29D57CD6009159C4 /* AlamofireTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireTableView.swift; sourceTree = "<group>"; };
 		04EF218C29D5705E001F2793 /* AlamofireApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlamofireApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04EF218F29D5705E001F2793 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04EF219129D5705E001F2793 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +94,8 @@
 		04B15E2329D571E7009159C4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				04B15E2E29D57CD6009159C4 /* AlamofireTableView.swift */,
+				04B15E2C29D576F0009159C4 /* AlamofireTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -93,6 +103,8 @@
 		04B15E2429D57217009159C4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				04B15E2A29D57556009159C4 /* Card.swift */,
+				04B15E2829D574F7009159C4 /* CardsResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -199,7 +211,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				04EF219429D5705E001F2793 /* ViewController.swift in Sources */,
+				04B15E2F29D57CD6009159C4 /* AlamofireTableView.swift in Sources */,
+				04B15E2B29D57556009159C4 /* Card.swift in Sources */,
+				04B15E2D29D576F0009159C4 /* AlamofireTableViewCell.swift in Sources */,
 				04EF219029D5705E001F2793 /* AppDelegate.swift in Sources */,
+				04B15E2929D574F7009159C4 /* CardsResponse.swift in Sources */,
 				04EF219229D5705E001F2793 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
