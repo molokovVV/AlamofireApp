@@ -9,7 +9,7 @@ import UIKit
 import Alamofire
 import AlamofireImage
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AlamofireViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     //MARK: - Properties
     

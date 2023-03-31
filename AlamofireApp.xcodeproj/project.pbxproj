@@ -14,9 +14,10 @@
 		04B15E2F29D57CD6009159C4 /* AlamofireTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B15E2E29D57CD6009159C4 /* AlamofireTableView.swift */; };
 		04B15E3529D58F6F009159C4 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 04B15E3429D58F6F009159C4 /* Alamofire */; };
 		04B15E3829D5D5C0009159C4 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 04B15E3729D5D5C0009159C4 /* AlamofireImage */; };
+		04B15E3C29D6BDAE009159C4 /* AlamofireCardDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B15E3B29D6BDAE009159C4 /* AlamofireCardDetailsViewController.swift */; };
 		04EF219029D5705E001F2793 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EF218F29D5705E001F2793 /* AppDelegate.swift */; };
 		04EF219229D5705E001F2793 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EF219129D5705E001F2793 /* SceneDelegate.swift */; };
-		04EF219429D5705E001F2793 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EF219329D5705E001F2793 /* ViewController.swift */; };
+		04EF219429D5705E001F2793 /* AlamofireViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EF219329D5705E001F2793 /* AlamofireViewController.swift */; };
 		04EF219929D5705F001F2793 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04EF219829D5705F001F2793 /* Assets.xcassets */; };
 		04EF219C29D5705F001F2793 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04EF219A29D5705F001F2793 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -26,10 +27,11 @@
 		04B15E2A29D57556009159C4 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		04B15E2C29D576F0009159C4 /* AlamofireTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireTableViewCell.swift; sourceTree = "<group>"; };
 		04B15E2E29D57CD6009159C4 /* AlamofireTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireTableView.swift; sourceTree = "<group>"; };
+		04B15E3B29D6BDAE009159C4 /* AlamofireCardDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireCardDetailsViewController.swift; sourceTree = "<group>"; };
 		04EF218C29D5705E001F2793 /* AlamofireApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlamofireApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04EF218F29D5705E001F2793 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04EF219129D5705E001F2793 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		04EF219329D5705E001F2793 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		04EF219329D5705E001F2793 /* AlamofireViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireViewController.swift; sourceTree = "<group>"; };
 		04EF219829D5705F001F2793 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04EF219B29D5705F001F2793 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04EF219D29D5705F001F2793 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -90,7 +92,8 @@
 		04B15E2229D571DD009159C4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				04EF219329D5705E001F2793 /* ViewController.swift */,
+				04EF219329D5705E001F2793 /* AlamofireViewController.swift */,
+				04B15E3B29D6BDAE009159C4 /* AlamofireCardDetailsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -218,8 +221,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04EF219429D5705E001F2793 /* ViewController.swift in Sources */,
+				04EF219429D5705E001F2793 /* AlamofireViewController.swift in Sources */,
 				04B15E2F29D57CD6009159C4 /* AlamofireTableView.swift in Sources */,
+				04B15E3C29D6BDAE009159C4 /* AlamofireCardDetailsViewController.swift in Sources */,
 				04B15E2B29D57556009159C4 /* Card.swift in Sources */,
 				04B15E2D29D576F0009159C4 /* AlamofireTableViewCell.swift in Sources */,
 				04EF219029D5705E001F2793 /* AppDelegate.swift in Sources */,
