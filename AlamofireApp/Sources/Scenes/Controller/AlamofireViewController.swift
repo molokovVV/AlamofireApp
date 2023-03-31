@@ -27,6 +27,7 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
         cardTable.cardTableView.dataSource = self
         cardTable.cardTableView.delegate = self
         cardTable.searchButton.addTarget(self, action: #selector(searchButtonPressed(_:)), for: .touchUpInside)
+        cardTable.resetButton.addTarget(self, action: #selector(resetButtonPressed(_:)), for: .touchUpInside)
         
         getData()
     }
@@ -121,6 +122,11 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
                 self?.errorAlert(error: error, response: response.response)
             }
         }
+    }
+    
+    @objc func resetButtonPressed(_ sender: UIButton) {
+        cardTable.searchTextField.text = ""
+        getData()
     }
 }
 

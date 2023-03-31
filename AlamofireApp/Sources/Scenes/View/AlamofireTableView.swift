@@ -13,15 +13,28 @@ class AlamofireTableView: UIView {
     
     lazy var searchTextField: UITextField = {
         let textField = UITextField()
+        textField.textAlignment = .center
+        textField.tintColor = .black
         textField.placeholder = "Введите название карты"
         return textField
     }()
     
     lazy var searchButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("Поиск", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        button.layer.cornerRadius = 17
+        button.backgroundColor = .black
+        return button
+    }()
+    
+    lazy var resetButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Сбросить", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        button.setTitleColor(.systemRed, for: .normal)
         return button
     }()
     
@@ -29,6 +42,14 @@ class AlamofireTableView: UIView {
         let tableView = UITableView()
         tableView.register(AlamofireTableViewCell.self, forCellReuseIdentifier: "AlamofireTableViewCell")
         return tableView
+    }()
+    
+    lazy var buttonsStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [searchButton, resetButton])
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.distribution = .fillEqually
+        return stackView
     }()
     
     //MARK: - Lifecycle
@@ -52,8 +73,9 @@ class AlamofireTableView: UIView {
     
     private func setupHierarchy() {
         addSubview(searchTextField)
-        addSubview(searchButton)
         addSubview(cardTableView)
+        addSubview(buttonsStackView)
+        
     }
     
     private func setupLayout() {
@@ -64,20 +86,17 @@ class AlamofireTableView: UIView {
             make.height.equalTo(40)
         }
         
-        searchButton.snp.makeConstraints { make in
-            make.top.equalTo(searchTextField.snp.bottom).offset(10)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(150)
-            make.height.equalTo(40)
-        }
-        
         cardTableView.snp.makeConstraints { make in
             make.top.equalTo(searchButton.snp.bottom).offset(10)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
+        
+        buttonsStackView.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(searchTextField.snp.bottom).offset(8)
+            make.width.equalTo(300)
+        }
     }
-    
-    
 }
