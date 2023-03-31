@@ -14,7 +14,10 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
     //MARK: - Properties
     
     private let cardTable = AlamofireTableView()
+    private let urlString = "https://api.magicthegathering.io/v1/cards"
     private var cards: [Card] = []
+    private var buttonSearchPressed = false
+    
     
     //MARK: - Lifecycle
     
@@ -24,12 +27,19 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+    }
+    
+    // MARK: - Setups
+    
+    private func setupView() {
         cardTable.cardTableView.dataSource = self
         cardTable.cardTableView.delegate = self
         cardTable.searchButton.addTarget(self, action: #selector(searchButtonPressed(_:)), for: .touchUpInside)
         cardTable.resetButton.addTarget(self, action: #selector(resetButtonPressed(_:)), for: .touchUpInside)
         
-        getData()
+        
+        getData(urlString: urlString)
     }
     
     // MARK: - UITableViewDataSource
@@ -45,15 +55,16 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.typeLabel.text = card.type ?? "Тип отсутствует"
         
         if let imageUrl = card.imageUrl, let url = URL(string: imageUrl) {
-                print("Image URL: \(url)")
+            print("Image URL: \(url)")
             cell.cardImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "placeholder"))
-            } else {
-                cell.cardImageView.image = UIImage(named: "placeholder")
-            }
+        } else {
+            cell.cardImageView.image = UIImage(named: "placeholder")
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let cardDetailsViewController = AlamofireCardDetailsViewController()
         cardDetailsViewController.card = cards[indexPath.row]
         present(cardDetailsViewController, animated: true)
@@ -68,13 +79,23 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: - API
     
     // Method for request from network
-    func getData() {
-        let urlString = "https://api.magicthegathering.io/v1/cards"
+    func getData(urlString: String) {
         AF.request(urlString).responseDecodable(of: CardsResponse.self) { [weak self] response in
             switch response.result {
             case .success(let cardsResponse):
-                self?.cards = cardsResponse.cards.filter { $0.imageUrl != nil } // Отфильтровываем карты без изображений
-                self?.cardTable.cardTableView.reloadData()
+                DispatchQueue.main.async {
+                    if let buttonSearchPressed = self?.buttonSearchPressed, buttonSearchPressed {
+                        self?.cards = cardsResponse.cards.filter { $0.imageUrl != nil && $0.name == self?.cardTable.searchTextField.text }
+                    } else {
+                        self?.cards = cardsResponse.cards.filter { $0.imageUrl != nil }
+                    }
+                    
+                    if self?.cards.isEmpty == true, let buttonSearchPressed = self?.buttonSearchPressed, buttonSearchPressed {
+                        self?.errorAlert(error: AFError.responseValidationFailed(reason: .dataFileNil), response: response.response, customMessage: "No cards found with the provided name.")
+                    } else {
+                        self?.cardTable.cardTableView.reloadData()
+                    }
+                }
             case .failure(let error):
                 self?.errorAlert(error: error, response: response.response)
             }
@@ -82,7 +103,7 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     // Method for errors
-    func errorAlert(error: AFError, response: HTTPURLResponse?) {
+    func errorAlert(error: AFError, response: HTTPURLResponse?, customMessage: String? = nil) {
         var errorMessage = "Search failed"
         
         if let statusCode = response?.statusCode {
@@ -111,21 +132,16 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
             return
         }
         
-        let urlString = "https://api.magicthegathering.io/v1/cards?name=\(encodedQuery)"
-        AF.request(urlString).responseDecodable(of: CardsResponse.self) { [weak self] response in
-            switch response.result {
-            case .success(let cardsResponse):
-                self?.cards = cardsResponse.cards.filter { $0.imageUrl != nil && $0.name == self?.cardTable.searchTextField.text }
-                self?.cardTable.cardTableView.reloadData()
-            case .failure(let error):
-                self?.errorAlert(error: error, response: response.response)
-            }
-        }
+        buttonSearchPressed = true
+        let searchUrlString = "https://api.magicthegathering.io/v1/cards?name=\(encodedQuery)"
+        getData(urlString: searchUrlString)
+        
     }
     
     @objc func resetButtonPressed(_ sender: UIButton) {
         cardTable.searchTextField.text = ""
-        getData()
+        buttonSearchPressed = false
+        getData(urlString: urlString)
     }
 }
 

@@ -18,7 +18,7 @@ class AlamofireCardDetailsViewController: UIViewController {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.font = UIFont.boldSystemFont(ofSize: 30)
         label.textAlignment = .center
         return label
     }()
@@ -28,6 +28,14 @@ class AlamofireCardDetailsViewController: UIViewController {
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.textColor = .darkGray
         return label
     }()
     
@@ -57,6 +65,7 @@ class AlamofireCardDetailsViewController: UIViewController {
         view.addSubview(nameLabel)
         view.addSubview(cardImageView)
         view.addSubview(typeLabel)
+        view.addSubview(descriptionLabel)
     }
     
     private func setupLayout() {
@@ -77,12 +86,19 @@ class AlamofireCardDetailsViewController: UIViewController {
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
         }
+        
+        descriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(typeLabel.snp.bottom).offset(16)
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+        }
     }
     
     private func configureCardDetails() {
         if let card = card {
             nameLabel.text = card.name
             typeLabel.text = card.type
+            descriptionLabel.text = card.description
             
             if let imageUrl = card.imageUrl, let url = URL(string: imageUrl) {
                 cardImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "placeholder"))

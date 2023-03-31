@@ -13,6 +13,7 @@ class AlamofireTableViewCell: UITableViewCell {
     
     lazy var nameLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 22)
         return label
     }()
     
