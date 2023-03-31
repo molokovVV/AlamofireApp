@@ -127,6 +127,7 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
     /// Method for hide keyboard
     func hideKeyboard() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
     }
     
