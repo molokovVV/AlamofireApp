@@ -94,6 +94,7 @@ class AlamofireCardDetailsViewController: UIViewController {
         }
     }
     
+    // Method for setup modal window
     private func configureCardDetails() {
         if let card = card {
             nameLabel.text = card.name
@@ -102,8 +103,6 @@ class AlamofireCardDetailsViewController: UIViewController {
             
             if let imageUrl = card.imageUrl, let url = URL(string: imageUrl) {
                 cardImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "placeholder"))
-            } else {
-                cardImageView.image = UIImage(named: "placeholder")
             }
         } 
     }
