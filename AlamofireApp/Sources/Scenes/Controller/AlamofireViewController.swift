@@ -73,7 +73,7 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
         AF.request(urlString).responseDecodable(of: CardsResponse.self) { [weak self] response in
             switch response.result {
             case .success(let cardsResponse):
-                self?.cards = cardsResponse.cards
+                self?.cards = cardsResponse.cards.filter { $0.imageUrl != nil } // Отфильтровываем карты без изображений
                 self?.cardTable.cardTableView.reloadData()
             case .failure(let error):
                 self?.errorAlert(error: error, response: response.response)
@@ -105,7 +105,7 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
         guard let query = cardTable.searchTextField.text, !query.isEmpty else {
             return
         }
-
+        
         guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             print("Error encoding query: \(query)")
             return
@@ -115,7 +115,7 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
         AF.request(urlString).responseDecodable(of: CardsResponse.self) { [weak self] response in
             switch response.result {
             case .success(let cardsResponse):
-                self?.cards = cardsResponse.cards
+                self?.cards = cardsResponse.cards.filter { $0.imageUrl != nil } // Отфильтровываем карты без изображений
                 self?.cardTable.cardTableView.reloadData()
             case .failure(let error):
                 self?.errorAlert(error: error, response: response.response)
