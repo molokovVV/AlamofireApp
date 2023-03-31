@@ -80,31 +80,30 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK: - API
     
-    // Method for request from network
+    /// Method for request from network
     func getData(urlString: String) {
         AF.request(urlString).responseDecodable(of: CardsResponse.self) { [weak self] response in
             switch response.result {
             case .success(let cardsResponse):
-                DispatchQueue.main.async {
-                    if let buttonSearchPressed = self?.buttonSearchPressed, buttonSearchPressed {
-                        self?.cards = cardsResponse.cards.filter { $0.imageUrl != nil && $0.name == self?.cardTable.searchTextField.text }
-                    } else {
-                        self?.cards = cardsResponse.cards.filter { $0.imageUrl != nil }
-                    }
-                    
-                    if self?.cards.isEmpty == true, let buttonSearchPressed = self?.buttonSearchPressed, buttonSearchPressed {
-                        self?.errorAlert(error: AFError.responseValidationFailed(reason: .dataFileNil), response: response.response, customMessage: "No cards found with the provided name.")
-                    } else {
+                if self?.buttonSearchPressed == true {
+                    self?.cards = cardsResponse.cards.filter { $0.imageUrl != nil && $0.name == self?.cardTable.searchTextField.text }
+                } else {
+                    self?.cards = cardsResponse.cards.filter { $0.imageUrl != nil }
+                }
+                
+                self?.preloadImages(completion: {
+                    DispatchQueue.main.async {
                         self?.cardTable.cardTableView.reloadData()
                     }
-                }
+                })
+
             case .failure(let error):
                 self?.errorAlert(error: error, response: response.response)
             }
         }
     }
     
-    // Method for errors
+    /// Method for errors
     func errorAlert(error: AFError, response: HTTPURLResponse?, customMessage: String? = nil) {
         var errorMessage = "Search failed"
         
@@ -121,9 +120,27 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
         self.present(alertController, animated: true)
     }
     
+    /// Method for hide keyboard
     func hideKeyboard() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
+    }
+    
+    /// Method loads cards images asynchronously and executes the given block of code after all downloads are completed
+    func preloadImages(completion: @escaping () -> Void) {
+        let dispatchGroup = DispatchGroup()
+        for card in cards {
+            if let imageUrl = card.imageUrl, let url = URL(string: imageUrl) {
+                let temporaryImageView = UIImageView()
+                dispatchGroup.enter()
+                temporaryImageView.af.setImage(withURL: url, completion: { _ in
+                    dispatchGroup.leave()
+                })
+            }
+        }
+        dispatchGroup.notify(queue: .main) {
+            completion()
+        }
     }
     
     

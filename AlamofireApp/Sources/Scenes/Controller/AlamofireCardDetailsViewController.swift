@@ -94,7 +94,7 @@ class AlamofireCardDetailsViewController: UIViewController {
         }
     }
     
-    // Method for setup modal window
+    /// Method for setup modal window
     private func configureCardDetails() {
         if let card = card {
             nameLabel.text = card.name
