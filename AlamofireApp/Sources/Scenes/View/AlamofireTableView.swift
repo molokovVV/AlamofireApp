@@ -16,6 +16,7 @@ class AlamofireTableView: UIView {
         textField.textAlignment = .center
         textField.tintColor = .black
         textField.placeholder = "Введите название карты"
+        textField.isUserInteractionEnabled = true
         return textField
     }()
     

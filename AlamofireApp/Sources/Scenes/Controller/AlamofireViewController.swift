@@ -9,7 +9,7 @@ import UIKit
 import Alamofire
 import AlamofireImage
 
-class AlamofireViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AlamofireViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     //MARK: - Properties
     
@@ -18,28 +18,23 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
     private var cards: [Card] = []
     private var buttonSearchPressed = false
     
-    
     //MARK: - Lifecycle
-    
-    override func loadView() {
-        view = cardTable
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        getData(urlString: urlString)
     }
     
     // MARK: - Setups
     
     private func setupView() {
+        view = cardTable
+        cardTable.searchTextField.delegate = self
         cardTable.cardTableView.dataSource = self
         cardTable.cardTableView.delegate = self
         cardTable.searchButton.addTarget(self, action: #selector(searchButtonPressed(_:)), for: .touchUpInside)
         cardTable.resetButton.addTarget(self, action: #selector(resetButtonPressed(_:)), for: .touchUpInside)
-        
-        
-        getData(urlString: urlString)
     }
     
     // MARK: - UITableViewDataSource
@@ -74,6 +69,13 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    // MARK: - UITextFieldDelegate
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     // MARK: - API
@@ -119,6 +121,11 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
         self.present(alertController, animated: true)
     }
     
+    func hideKeyboard() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
     
     //MARK: - Actions
     
@@ -135,13 +142,16 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
         buttonSearchPressed = true
         let searchUrlString = "https://api.magicthegathering.io/v1/cards?name=\(encodedQuery)"
         getData(urlString: searchUrlString)
-        
     }
     
     @objc func resetButtonPressed(_ sender: UIButton) {
         cardTable.searchTextField.text = ""
         buttonSearchPressed = false
         getData(urlString: urlString)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 
