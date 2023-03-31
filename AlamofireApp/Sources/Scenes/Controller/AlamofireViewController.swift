@@ -34,7 +34,6 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK: - UITableViewDataSource
     
-    // Set the number of cells
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cards.count
     }
@@ -116,7 +115,7 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
         AF.request(urlString).responseDecodable(of: CardsResponse.self) { [weak self] response in
             switch response.result {
             case .success(let cardsResponse):
-                self?.cards = cardsResponse.cards.filter { $0.imageUrl != nil } // Отфильтровываем карты без изображений
+                self?.cards = cardsResponse.cards.filter { $0.imageUrl != nil && $0.name == self?.cardTable.searchTextField.text }
                 self?.cardTable.cardTableView.reloadData()
             case .failure(let error):
                 self?.errorAlert(error: error, response: response.response)
