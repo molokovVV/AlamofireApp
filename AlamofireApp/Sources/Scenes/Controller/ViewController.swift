@@ -33,6 +33,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARK: - UITableViewDataSource
     
+    // Set the number of cells
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cards.count
     }
@@ -59,7 +60,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     // MARK: - API
-
+    
+    // Method for request from network
     func getData() {
         let urlString = "https://api.magicthegathering.io/v1/cards"
         AF.request(urlString).responseDecodable(of: CardsResponse.self) { [weak self] response in
@@ -68,9 +70,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self?.cards = cardsResponse.cards
                 self?.cardTable.cardTableView.reloadData()
             case .failure(let error):
-                print("Error fetching cards: \(error)")
+                self?.errorAlert(error: error, response: response.response)
             }
         }
+    }
+    
+    // Method for errors
+    func errorAlert(error: AFError, response: HTTPURLResponse?) {
+        var errorMessage = "Search failed"
+        
+        if let statusCode = response?.statusCode {
+            errorMessage += "\nHTTP status cod: \(statusCode)"
+        }
+        
+        if let underlyingError = error.asAFError?.underlyingError {
+            errorMessage += "\nDetailed error: \(underlyingError.localizedDescription)"
+        }
+        
+        let alertController = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alertController, animated: true)
     }
     
     
@@ -93,20 +112,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self?.cards = cardsResponse.cards
                 self?.cardTable.cardTableView.reloadData()
             case .failure(let error):
-                print("Error fetching cards: \(error)")
-                var errorMessage = "Не удалось выполнить поиск"
-                
-                if let statusCode = response.response?.statusCode {
-                    errorMessage += "\nHTTP статус код: \(statusCode)"
-                }
-                
-                if let underlyingError = error.asAFError?.underlyingError {
-                    errorMessage += "\nПодробная ошибка: \(underlyingError.localizedDescription)"
-                }
-                
-                let alertController = UIAlertController(title: "Ошибка", message: errorMessage, preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: .default))
-                self?.present(alertController, animated: true)
+                self?.errorAlert(error: error, response: response.response)
             }
         }
     }
