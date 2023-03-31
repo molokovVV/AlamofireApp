@@ -53,6 +53,12 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cardDetailsViewController = AlamofireCardDetailsViewController()
+        cardDetailsViewController.card = cards[indexPath.row]
+        present(cardDetailsViewController, animated: true)
+    }
+    
     // MARK: - UITableViewDelegate
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
