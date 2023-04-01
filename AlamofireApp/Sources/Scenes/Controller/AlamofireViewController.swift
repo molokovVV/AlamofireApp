@@ -23,6 +23,7 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        hideKeyboard()
         getData(urlString: urlString)
     }
     
@@ -91,12 +92,15 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
                     self?.cards = cardsResponse.cards.filter { $0.imageUrl != nil }
                 }
                 
-                self?.preloadImages(completion: {
-                    DispatchQueue.main.async {
-                        self?.cardTable.cardTableView.reloadData()
-                    }
-                })
-
+                if self?.cards.isEmpty == true, self?.buttonSearchPressed == true {
+                    self?.errorAlert(error: AFError.responseValidationFailed(reason: .dataFileNil), response: response.response, customMessage: "No cards found with the provided name.")
+                } else {
+                    self?.preloadImages(completion: {
+                        DispatchQueue.main.async {
+                            self?.cardTable.cardTableView.reloadData()
+                        }
+                    })
+                }
             case .failure(let error):
                 self?.errorAlert(error: error, response: response.response)
             }
@@ -123,6 +127,7 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
     /// Method for hide keyboard
     func hideKeyboard() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
     }
     
