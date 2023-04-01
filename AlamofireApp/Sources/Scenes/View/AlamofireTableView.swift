@@ -54,6 +54,12 @@ class AlamofireTableView: UIView {
         return stackView
     }()
     
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.style = .large
+        return indicator
+    }()
+    
     //MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -77,7 +83,7 @@ class AlamofireTableView: UIView {
         addSubview(searchTextField)
         addSubview(cardTableView)
         addSubview(buttonsStackView)
-        
+        addSubview(activityIndicator)
     }
     
     private func setupLayout() {
@@ -99,6 +105,11 @@ class AlamofireTableView: UIView {
             make.centerX.equalToSuperview()
             make.top.equalTo(searchTextField.snp.bottom).offset(8)
             make.width.equalTo(300)
+        }
+        
+        activityIndicator.snp.makeConstraints { make in
+            make.centerY.equalTo(searchTextField)
+            make.right.equalTo(searchTextField.snp.right).offset(-8)
         }
     }
 }
