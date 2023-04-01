@@ -46,6 +46,11 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlamofireTableViewCell", for: indexPath) as! AlamofireTableViewCell
+        
+        guard indexPath.row < cards.count else {
+                return cell
+            }
+        
         let card = cards[indexPath.row]
         cell.nameLabel.text = card.name ?? "Название отсутствует"
         cell.typeLabel.text = card.type ?? "Тип отсутствует"
@@ -84,6 +89,8 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
     /// Method for request from network
     func getData(urlString: String) {
         AF.request(urlString).responseDecodable(of: CardsResponse.self) { [weak self] response in
+            self?.cardTable.activityIndicator.stopAnimating()
+            
             switch response.result {
             case .success(let cardsResponse):
                 if self?.buttonSearchPressed == true {
@@ -161,8 +168,9 @@ class AlamofireViewController: UIViewController, UITableViewDelegate, UITableVie
             return
         }
         
-        buttonSearchPressed = true
         let searchUrlString = "https://api.magicthegathering.io/v1/cards?name=\(encodedQuery)"
+        buttonSearchPressed = true
+        cardTable.activityIndicator.startAnimating()
         getData(urlString: searchUrlString)
     }
     
